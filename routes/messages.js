@@ -53,7 +53,7 @@ router.patch('/:id', function(req, res, next) {
                 error: { message: 'Message not found' }
             });
         }
-        message.conent = req.body.content;
+        message.content = req.body.content;
         message.save(function(err, result) {
             if (err) {
                 return res.status(500).json({
