@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { LogOutComponent } from './users/logout.component';
 import { SingUpComponent } from './users/signup.component';
 import { SingInComponent } from './users/signin.component';
@@ -26,9 +27,14 @@ import { routing } from './app.routing'
         SingInComponent,
         SingUpComponent,
         LogOutComponent
-
     ],
-    imports: [BrowserModule, FormsModule, routing, ReactiveFormsModule],
+    imports: [
+        BrowserModule, 
+        FormsModule, 
+        routing, 
+        ReactiveFormsModule, 
+        HttpModule
+        ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

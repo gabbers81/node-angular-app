@@ -1,9 +1,8 @@
 <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="form-group">
         <label for="content">Content</label>
-        <input type="text" name="content" class="form-control" #content (change)="log(content.touched)" ngModel required />
+        <input type="text" name="content" class="form-control" #content ngModel required />
     </div>
-    <div class="alert alert-danger" *ngIf="content.touched && !content.valid">Content is required.</div>
     <br>
     <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Save</button>
 </form>
