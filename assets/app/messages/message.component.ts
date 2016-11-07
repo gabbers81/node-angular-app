@@ -1,5 +1,5 @@
 import { MessageService } from './message.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Message } from './message.model';
 
@@ -25,7 +25,6 @@ import { Message } from './message.model';
 export class MessageComponent implements OnInit {
 
     @Input() message: Message;
-    @Output() editClicked = new EventEmitter();
 
     constructor(private _messageService: MessageService) { }
 
@@ -34,8 +33,7 @@ export class MessageComponent implements OnInit {
     }
 
     onEdit() {
-        alert('it works!');
-        this.editClicked.emit('New value.');
+        this._messageService.editMessage(this.message);
     }
 
     onDelete() {

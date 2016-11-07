@@ -9,18 +9,41 @@ import { Message } from './message.model'
     templateUrl: './message-input.component.html',
 })
 export class MessageInputComponent implements OnInit {
+    message: Message;
 
     constructor(private _messageService: MessageService) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this._messageService.messageEdited.subscribe(
+            (message: Message) => this.message = message
+        );
+    }
+
+    onClear(form: NgForm) {
+        this.message = null;
+        form.resetForm();
+    }
 
     onSubmit(form: NgForm) {
-        const message = new Message(form.value.content, 'Gus')
-        this._messageService.addMessage(message)
-            .subscribe(
+         console.log(this.message);
+        if (this.message) {
+            //Editing
+            this.message.content == form.value.content;
+            this._messageService.updateMessage(this.message)
+                .subscribe(res => {
+                console.log(this.message);
+                console.log(res)
+            });
+            this.message = null;
+        } else {
+            //Creating
+            const message = new Message(form.value.content, 'Gus')
+            this._messageService.addMessage(message)
+                .subscribe(
                 data => console.log(data),
                 err => console.log(err)
-            );
+                );
+        }
 
         form.resetForm();
     }

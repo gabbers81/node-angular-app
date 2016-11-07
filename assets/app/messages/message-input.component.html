@@ -1,8 +1,9 @@
 <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="form-group">
         <label for="content">Content</label>
-        <input type="text" name="content" class="form-control" #content ngModel required />
+        <input type="text" name="content" class="form-control" #content [ngModel]="message?.content" required />
     </div>
     <br>
+    <button type="button" class="btn btn-danger" (click)="onClear(f)">Clear</button>
     <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Save</button>
 </form>
