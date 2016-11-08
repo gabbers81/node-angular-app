@@ -19,4 +19,15 @@ export class UserService {
                     .map((response: Response) => response.json())
                     .catch((err: Response) => Observable.throw(err.json()))
     }
+
+        singin(user: User) {
+
+        const body = JSON.stringify(user);
+        const headers = new Headers({'Content-Type': 'application/json'})
+
+        return this._http.post(this.url + '/signin', body, {headers: headers})
+                    .map((response: Response) => response.json())
+                    .catch((err: Response) => Observable.throw(err.json()))
+    }
+
 }
