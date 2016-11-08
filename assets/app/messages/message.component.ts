@@ -37,7 +37,7 @@ export class MessageComponent implements OnInit {
     }
 
     onDelete() {
-        this._messageService.deleteMessage(this.message);
+        this._messageService.deleteMessage(this.message).subscribe( data => console.log(data));
     }
 
 }
