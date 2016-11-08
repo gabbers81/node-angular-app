@@ -1,3 +1,4 @@
+import { UserService } from './users/user.service';
 import { HttpModule } from '@angular/http';
 import { LogOutComponent } from './users/logout.component';
 import { SingUpComponent } from './users/signup.component';
@@ -35,6 +36,7 @@ import { routing } from './app.routing'
         ReactiveFormsModule, 
         HttpModule
         ],
+    providers: [UserService],  
     bootstrap: [AppComponent]
 })
 export class AppModule {
