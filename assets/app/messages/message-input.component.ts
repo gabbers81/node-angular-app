@@ -1,22 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, NgForm, FormControl } from '@angular/forms'
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
 
-import { MessageService } from './message.service'
-import { Message } from './message.model'
+import { MessageService } from "./message.service";
+import { Message } from "./message.model";
 
 @Component({
     selector: 'app-message-input',
-    templateUrl: './message-input.component.html',
+    templateUrl: './message-input.component.html'
 })
 export class MessageInputComponent implements OnInit {
     message: Message;
 
-    constructor(private _messageService: MessageService) { }
+    constructor(private messageService: MessageService) {}
 
-    ngOnInit() {
-        this._messageService.messageEdited.subscribe(
-            (message: Message) => this.message = message
-        );
+    onSubmit(form: NgForm) {
+        if (this.message) {
+            // Edit
+            this.message.content = form.value.content;
+            this.messageService.updateMessage(this.message)
+                .subscribe(
+                    result => console.log(result)
+                );
+            this.message = null;
+        } else {
+            // Create
+            const message = new Message(form.value.content, 'Max');
+            this.messageService.addMessage(message)
+                .subscribe(
+                    data => console.log(data),
+                    error => console.error(error)
+                );
+        }
+        form.resetForm();
     }
 
     onClear(form: NgForm) {
@@ -24,28 +39,9 @@ export class MessageInputComponent implements OnInit {
         form.resetForm();
     }
 
-    onSubmit(form: NgForm) {
-         console.log(this.message);
-        if (this.message) {
-            //Editing
-            this.message.content = form.value.content;
-            console.log(this.message);
-            this._messageService.updateMessage(this.message)
-                .subscribe(res => {
-                console.log(this.message);
-                console.log(res)
-            });
-            this.message = null;
-        } else {
-            //Creating
-            const message = new Message(form.value.content, 'Gus')
-            this._messageService.addMessage(message)
-                .subscribe(
-                data => console.log(data),
-                err => console.log(err)
-                );
-        }
-
-        form.resetForm();
+    ngOnInit() {
+        this.messageService.messageIsEdit.subscribe(
+            (message: Message) => this.message = message
+        );
     }
 }
